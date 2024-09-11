@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Combustível mais vantajoso</title>
+</head>
+<body>
+    <h1>Combustível mais vantajoso</h1>
+    
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+        <label for="gasolina">Preço da Gasolina (R$/litro):</label>
+        <input type="number" id="gasolina" name="gasolina" step="0.01" required>
+        
+        <label for="etanol">Preço do Etanol (R$/litro):</label>
+        <input type="number" id="etanol" name="etanol" step="0.01" required>
+        
+        <button type="submit" name="submit">Calcular</button>
+    </form>
+    
+    <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $gasolina = $_POST["gasolina"];
+        $etanol = $_POST["etanol"];
+        
+        $relacao = ($etanol / $gasolina) * 100;
+        
+        echo "<div class='result'>";
+        if ($relacao > 70) {
+            echo "É mais vantajoso abastecer com Gasolina.";
+        } elseif ($relacao < 70) {
+            echo "É mais vantajoso abastecer com Etanol.";
+        } else {
+            echo "Tanto faz abastecer com Gasolina ou Etanol.";
+        }
+        echo "<br>Relação Etanol/Gasolina: " . number_format($relacao, 2) . "%";
+        echo "</div>";
+    }
+    ?>
+</body>
+</html>
